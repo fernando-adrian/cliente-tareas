@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Mis Tareas</h3>
+
+            <table class="table table-hover mt-5">
+                <thead>
+                    <tr>
+                        <th>NOMBRE</th>
+                        <th>COMPLETADO</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let tarea of tareas">
+                        <td>{{ tarea.nombre }}</td>
+                        <td>
+                            <span *ngIf="tarea.completado; else tareaIncompleta">Si</span>
+                            <ng-template #tareaIncompleta>
+                                No
+                            </ng-template>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-primary" (click)="edit(tarea)">
+                                    Editar
+                                </button>
+                                <button class="btn btn-danger" (click)="delete(tarea.id)"> 
+                                    Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h3>{{ tareaEnEdicion ? 'Editar' : 'Nueva'}} tarea</h3>
+
+            <form class="mt-5" [formGroup]="formulario" (ngSubmit)="save()" autocomplete="off">
+                <div class="mb-2">
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" type="text" placeholder="Nombre" class="form-control" formControlName="nombre">
+                </div>
+
+                <div class="mb-2 form-check">
+                    <label>
+                        <input type="checkbox" class="form-check-input" formControlName="completado">
+                        Completado
+                    </label>
+                </div>
+
+                <div class="text-end">
+                    <button class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
